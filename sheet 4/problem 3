@@ -1,0 +1,17 @@
+    public static double cylinderVolume (double dvalue,double hvalue ){
+        
+     double v ;
+    double r = dvalue / 2 ;
+     v = Math.PI * r*r * hvalue ;
+    return v ;
+    }
+    public static void main(String[] args) {
+        // TODO code application logic here
+        
+     Scanner input = new Scanner(System.in);
+       double dvalue = input.nextDouble() ;
+       double hvalue = input.nextDouble();
+        System.out.println(cylinderVolume(dvalue,hvalue));
+       
+    }
+    
