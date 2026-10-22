@@ -1,0 +1,19 @@
+package javaapplication5;
+ import java .util.Scanner;
+public class JavaApplication5 {
+    public static int getInt(Scanner s , String prompt) {
+        System.out.println(prompt);
+        int num =  s.nextInt();
+        return num;
+    }
+
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+
+        int number = getInt(input, "Enter an integer: ");
+
+        System.out.println("The number is: " + number);
+
+        input.close();
+    }
+}
