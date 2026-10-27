@@ -1,0 +1,30 @@
+   public static void main(String[] args) {
+        // TODO code application logic here
+        
+        Scanner in = new Scanner (System.in);
+         int[] sales = new int [7];
+          System.out.println("enter sales of 7 days ");
+          int total = 0 , counter = 0;
+          
+      for ( int i=0 ; i < 7 ; i++ ) {
+          
+        sales[i]=in.nextInt();
+          
+         total += sales[i];
+        
+        if (sales[i] > 20)
+            
+            counter ++;
+     
+            }
+        
+        double avg =Math.round(total / 7.0);
+        
+        System.out.println(" total =" + total);
+        System.out.println("counter= " + counter);
+        System.out.println("Average =" + avg);
+        
+  
+    }
+    
+}
