@@ -11,7 +11,7 @@ public class CashRegister {
     }
 
     
-    public CashRegister(int itemCount, double totalPrice) {
+    public CashRegister additem ( double Price) {
         this.itemCount = itemCount;
         this.totalPrice = totalPrice;
     }
