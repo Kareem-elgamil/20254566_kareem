@@ -1,0 +1,76 @@
+import java.util.Scanner;
+
+class BookManagment {
+    private String title;
+    private String author;
+    private double price;
+
+    
+    public BookManagment() {
+        this.title = "Unknown";
+        this.author = "Unknown";
+        this.price = 0.0;
+    }
+
+    
+    public BookManagment(String title, String author, double price) {
+        this.title = title;
+        this.author = author;
+        this.price = price;
+    }
+    
+    public void applyDiscount(double percentage) {
+        if (percentage > 0 && percentage <= 100)
+            this.price -= this.price * percentage / 100;
+    }
+
+    
+    public boolean isExpensive() {
+        return price > 500;
+    }
+
+   
+    public String getTitle() { return title; }
+    public String getAuthor() { return author; }
+    public double getPrice() { return price; }
+}
+  public static void main(String[] args) {
+   
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter number of books: ");
+        int n = scanner.nextInt();
+        scanner.nextLine(); 
+        Book[] books = new Book[n];
+
+       
+        for (int i = 0; i < n; i++) {
+            System.out.println("Enter details for book " + (i+1) + "title:");
+       
+            String title = scanner.next();
+         System.out.println("Enter details for book " + (i+1) + "author:");
+            String author = scanner.next();
+          System.out.println("Enter details for book " + (i+1) + "price:");
+            double price = scanner.nextDouble();
+           
+            books[i] = new Book(title, author, price);
+        }
+
+        
+        System.out.print("Enter index of book to apply discount : ");
+        int idx = scanner.nextInt();
+        if ( idx >= 0 && idx <= n-1 ){
+        System.out.print("Enter discount percentage: ");
+        
+        
+        double percent = scanner.nextDouble();
+        books[idx].applyDiscount(percent);
+        }
+
+        System.out.println("title =" + books[idx].gettitle()+ "author ="+ books[idx].getAuthor() + " price = " + books[idx].getprice());
+            
+            
+            
+        }
+
+        
+    }
