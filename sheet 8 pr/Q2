@@ -1,0 +1,229 @@
+public class UniversityLibrarySystem {
+
+    // 1. Parent Class
+    static class LibraryItem {
+        private String itemId;
+        private String title;
+        private int publicationYear;
+
+        public LibraryItem(String itemId, String title, int publicationYear) {
+            this.itemId = itemId;
+            this.title = title;
+            this.publicationYear = publicationYear;
+        }
+
+        // Getters and Setters
+        public String getItemId() {
+            return itemId;
+        }
+
+        public void setItemId(String itemId) {
+            this.itemId = itemId;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public int getPublicationYear() {
+            return publicationYear;
+        }
+
+        public void setPublicationYear(int publicationYear) {
+            this.publicationYear = publicationYear;
+        }
+
+        // 2. Base late fee (5 EGP/day) and overloaded version with discount (in EGP)
+        public double calculateLateFee(int days) {
+            if (days <= 0) {
+                return 0.0;
+            }
+            return days * 5.0;
+        }
+
+        public double calculateLateFee(int days, double discount) {
+            double fee = calculateLateFee(days) - discount;
+            return Math.max(0.0, fee);
+        }
+
+        public void displayInfo() {
+            System.out.println(this.toString());
+        }
+
+        @Override
+        public String toString() {
+            return String.format(
+                "LibraryItem [ID=%s, Title=%s, Year=%d]",
+                itemId, title, publicationYear
+            );
+        }
+    }
+
+    // 3 & 4. Child Class: PrintedBook (7 EGP/day)
+    static class PrintedBook extends LibraryItem {
+        private String author;
+        private int numberOfPages;
+
+        public PrintedBook(
+                String itemId,
+                String title,
+                int publicationYear,
+                String author,
+                int numberOfPages) {
+            super(itemId, title, publicationYear);
+            this.author = author;
+            this.numberOfPages = numberOfPages;
+        }
+
+        public String getAuthor() {
+            return author;
+        }
+
+        public void setAuthor(String author) {
+            this.author = author;
+        }
+
+        public int getNumberOfPages() {
+            return numberOfPages;
+        }
+
+        public void setNumberOfPages(int numberOfPages) {
+            this.numberOfPages = numberOfPages;
+        }
+
+        @Override
+        public double calculateLateFee(int days) {
+            if (days <= 0) {
+                return 0.0;
+            }
+            return days * 7.0;
+        }
+
+        @Override
+        public void displayInfo() {
+            System.out.println("=== Printed Book Details ===");
+            System.out.println("Item ID         : " + getItemId());
+            System.out.println("Title           : " + getTitle());
+            System.out.println("Author          : " + author);
+            System.out.println("Publication Year: " + getPublicationYear());
+            System.out.println("Pages           : " + numberOfPages);
+        }
+
+        @Override
+        public String toString() {
+            return String.format(
+                "PrintedBook [ID=%s, Title=%s, Author=%s, Year=%d, Pages=%d]",
+                getItemId(), getTitle(), author, getPublicationYear(), numberOfPages
+            );
+        }
+    }
+
+    // 3 & 4. Child Class: DigitalResource (3 EGP/day)
+    static class DigitalResource extends LibraryItem {
+        private String fileFormat;
+        private double fileSizeMb;
+
+        public DigitalResource(
+                String itemId,
+                String title,
+                int publicationYear,
+                String fileFormat,
+                double fileSizeMb) {
+            super(itemId, title, publicationYear);
+            this.fileFormat = fileFormat;
+            this.fileSizeMb = fileSizeMb;
+        }
+
+        public String getFileFormat() {
+            return fileFormat;
+        }
+
+        public void setFileFormat(String fileFormat) {
+            this.fileFormat = fileFormat;
+        }
+
+        public double getFileSizeMb() {
+            return fileSizeMb;
+        }
+
+        public void setFileSizeMb(double fileSizeMb) {
+            this.fileSizeMb = fileSizeMb;
+        }
+
+        @Override
+        public double calculateLateFee(int days) {
+            if (days <= 0) {
+                return 0.0;
+            }
+            return days * 3.0;
+        }
+
+        @Override
+        public void displayInfo() {
+            System.out.println("=== Digital Resource Details ===");
+            System.out.println("Item ID         : " + getItemId());
+            System.out.println("Title           : " + getTitle());
+            System.out.println("File Format     : " + fileFormat);
+            System.out.println("Publication Year: " + getPublicationYear());
+            System.out.printf("File Size       : %.2f MB%n", fileSizeMb);
+        }
+
+        @Override
+        public String toString() {
+            return String.format(
+                "DigitalResource [ID=%s, Title=%s, Format=%s, Year=%d, Size=%.2f MB]",
+                getItemId(), getTitle(), fileFormat, getPublicationYear(), fileSizeMb
+            );
+        }
+    }
+
+    // 5. Main Method
+    public static void main(String[] args) {
+        int lateDays = 5;
+        double discountEgp = 10.0;
+
+        // Create one object of each child class
+        PrintedBook book = new PrintedBook(
+            "BK-101",
+            "Introduction to Algorithms",
+            2022,
+            "Thomas H. Cormen",
+            1312
+        );
+
+        DigitalResource resource = new DigitalResource(
+            "DG-204",
+            "Database System Concepts Lecture Notes",
+            2024,
+            "PDF",
+            18.5
+        );
+
+        // Display their information and calculate late fees for 5 days
+        book.displayInfo();
+        System.out.printf("Late fee for %d days: %.2f EGP%n%n", lateDays, book.calculateLateFee(lateDays));
+
+        resource.displayInfo();
+        System.out.printf("Late fee for %d days: %.2f EGP%n%n", lateDays, resource.calculateLateFee(lateDays));
+
+        // Test the overloaded method with a discount
+        System.out.println("--- Overloaded Late Fee (with " + discountEgp + " EGP discount) ---");
+        System.out.printf("PrintedBook discounted fee    : %.2f EGP%n", book.calculateLateFee(lateDays, discountEgp));
+        System.out.printf("DigitalResource discounted fee: %.2f EGP%n%n", resource.calculateLateFee(lateDays, discountEgp));
+
+        // Print both objects using System.out.println() (calls toString())
+        System.out.println("--- toString() Output ---");
+        System.out.println(book);
+        System.out.println(resource);
+        System.out.println();
+
+        // Parent-class reference pointing to a PrintedBook object
+        System.out.println("--- Parent Reference Polymorphism ---");
+        LibraryItem parentRef = book;
+        System.out.printf("Parent ref calling calculateLateFee(%d): %.2f EGP%n", lateDays, parentRef.calculateLateFee(lateDays));
+    }
+}
