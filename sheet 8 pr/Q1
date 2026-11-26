@@ -1,0 +1,125 @@
+public class VehicleRentalSystem {
+
+    static abstract class Vehicle {
+        private String brand;
+        private String model;
+        private int manufacturingYear;
+        private double dailyRate;
+
+        public Vehicle(String brand, String model, int manufacturingYear, double dailyRate) {
+            this.brand = brand;
+            this.model = model;
+            this.manufacturingYear = manufacturingYear;
+            this.dailyRate = dailyRate;
+        }
+
+        public String getBrand() {
+            return brand;
+        }
+
+        public String getModel() {
+            return model;
+        }
+
+        public int getManufacturingYear() {
+            return manufacturingYear;
+        }
+
+        public double getDailyRate() {
+            return dailyRate;
+        }
+
+        public double calculateRentalPrice(int days) {
+            if (days <= 0) {
+                return 0.0;
+            }
+            return dailyRate * days;
+        }
+
+        public double calculateRentalPrice(int days, double discountPercent) {
+            double basePrice = calculateRentalPrice(days);
+            return basePrice - (basePrice * (discountPercent / 100.0));
+        }
+
+        public void displayDetails() {
+            System.out.println("Brand: " + brand + ", Model: " + model + ", Year: " + manufacturingYear);
+        }
+
+        @Override
+        public String toString() {
+            return String.format("%d %s %s (Daily Rate: %.2f)", manufacturingYear, brand, model, dailyRate);
+        }
+    }
+
+    static class Car extends Vehicle {
+        private int numberOfDoors;
+
+        public Car(String brand, String model, int manufacturingYear, double dailyRate, int numberOfDoors) {
+            super(brand, model, manufacturingYear, dailyRate);
+            this.numberOfDoors = numberOfDoors;
+        }
+
+        public int getNumberOfDoors() {
+            return numberOfDoors;
+        }
+
+        @Override
+        public void displayDetails() {
+            super.displayDetails();
+            System.out.println("Type: Car, Doors: " + numberOfDoors);
+        }
+
+        @Override
+        public String toString() {
+            return "Car -> " + super.toString() + ", Doors: " + numberOfDoors;
+        }
+    }
+
+    static class Motorcycle extends Vehicle {
+        private int engineCapacity;
+
+        public Motorcycle(String brand, String model, int manufacturingYear, double dailyRate, int engineCapacity) {
+            super(brand, model, manufacturingYear, dailyRate);
+            this.engineCapacity = engineCapacity;
+        }
+
+        public int getEngineCapacity() {
+            return engineCapacity;
+        }
+
+        @Override
+        public void displayDetails() {
+            super.displayDetails();
+            System.out.println("Type: Motorcycle, Engine Capacity: " + engineCapacity + " cc");
+        }
+
+        @Override
+        public String toString() {
+            return "Motorcycle -> " + super.toString() + ", Engine: " + engineCapacity + " cc";
+        }
+    }
+
+    public static void main(String[] args) {
+      
+        Car car = new Car("Toyota", "Corolla", 2024, 1200.00, 4);
+        Motorcycle motorcycle = new Motorcycle("Yamaha", "MT-07", 2023, 650.00, 689);
+
+
+        car.displayDetails();
+        motorcycle.displayDetails();
+
+
+        int days = 3;
+        System.out.printf("Car 3-day rental: %.2f%n", car.calculateRentalPrice(days));
+        System.out.printf("Motorcycle 3-day rental: %.2f%n", motorcycle.calculateRentalPrice(days));
+
+
+        double discount = 15.0;
+        System.out.printf("Car 3-day rental (15%% off): %.2f%n", car.calculateRentalPrice(days, discount));
+        System.out.printf("Motorcycle 3-day rental (15%% off): %.2f%n", motorcycle.calculateRentalPrice(days, discount));
+
+     
+        System.out.println(car);
+        System.out.println(motorcycle);
+    }
+}
